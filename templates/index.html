@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Dashboard v.4</title>
+
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="../static/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+
+</head>
+
+<body class="top-navigation">
+
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                            class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="dashboard_4.html#" class="navbar-brand">人脸属性修改系统</a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li id="camera">
+                            <a aria-expanded="false" onclick="loadXMLDoc('../static/camera.html')" role="button" href="javascript:void(0);">拍摄照片</a>
+                        </li>
+                        <li id="attribute" class="active">
+                            <a aria-expanded="false" onclick="loadXMLDoc('../static/attribute.html')" role="button" href="javascript:void(0);">修改属性</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="file-manager">
+                                <h5>选择图片:</h5>
+                                <ul id="imgs" class="folder-list" style="padding: 0">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10" id="change">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div id="sidebars" class="content-left">
+                            </div>
+                            <div class="content-right">
+                                <img id="img" src="../static/img/0.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Mainly scripts -->
+<script src="../static/js/jquery-2.1.1.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+
+<!--<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
+<!--<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
+<!-- IonRangeSlider -->
+<script src="../static/js/plugins/ionRangeSlider/ion.rangeSlider.js"></script>
+<script src="../static/js/main.js"></script>
+<script>
+    function loadXMLDoc(url) {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("change").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        $('#attribute').removeClass('active');
+        $('#camera').addClass('active')
+    }
+</script>
+
+</body>
+
+</html>
