@@ -14,6 +14,39 @@
     <link href="../static/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
 
 </head>
+<!-- Mainly scripts -->
+<script src="../static/js/jquery-2.1.1.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+
+<!--<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
+<!--<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
+<!-- IonRangeSlider -->
+<script src="../static/js/plugins/ionRangeSlider/ion.rangeSlider.js"></script>
+<script src="../static/js/main.js"></script>
+<script>
+
+    function loadXMLDoc(url) {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("change").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        $('#attribute').removeClass('active');
+        $('#camera').addClass('active')
+    }
+</script>
 
 <body class="top-navigation">
 
@@ -31,10 +64,12 @@
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li id="camera">
-                            <a aria-expanded="false" onclick="loadXMLDoc('../static/camera.html')" role="button" href="javascript:void(0);">拍摄照片</a>
+                            <a aria-expanded="false" onclick="loadXMLDoc('../static/camera.html')" role="button"
+                               href="javascript:void(0);">拍摄照片</a>
                         </li>
                         <li id="attribute" class="active">
-                            <a aria-expanded="false" onclick="loadXMLDoc('../static/attribute.html')" role="button" href="javascript:void(0);">修改属性</a>
+                            <a aria-expanded="false" onclick="loadXMLDoc('../static/attribute.html')" role="button"
+                               href="javascript:void(0);">修改属性</a>
                         </li>
                     </ul>
                 </div>
@@ -59,7 +94,9 @@
                             <div id="sidebars" class="content-left">
                             </div>
                             <div class="content-right">
-                                <img id="img" src="../static/img/0.png" alt="">
+
+                                <img id="img" src="../static/img/0.png" alt="" onmouseover="ishow(this);" onmouseout="ihidden(this);" >
+                                <img id="cover-img" src="../static/img/0.png" style="visibility:hidden; z-index:100" onmouseover="this.style.visibility='visible'" alt="">
                             </div>
                         </div>
                     </div>
@@ -69,39 +106,7 @@
     </div>
 </div>
 
-
-<!-- Mainly scripts -->
-<script src="../static/js/jquery-2.1.1.js"></script>
-<script src="../static/js/bootstrap.min.js"></script>
-
-
-<!--<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
-<!--<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-<!-- IonRangeSlider -->
-<script src="../static/js/plugins/ionRangeSlider/ion.rangeSlider.js"></script>
-<script src="../static/js/main.js"></script>
-<script>
-    function loadXMLDoc(url) {
-        var xmlhttp;
-        if (window.XMLHttpRequest) {
-            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-            xmlhttp = new XMLHttpRequest();
-        }
-        else {
-            // IE6, IE5 浏览器执行代码
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("change").innerHTML = xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-        $('#attribute').removeClass('active');
-        $('#camera').addClass('active')
-    }
-</script>
+ <img src="{{ url_for('video_feed') }}">
 
 </body>
 

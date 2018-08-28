@@ -6979,8 +6979,9 @@ body.body-small .vote-icon {
 }
 
 .content-left {
-    width: 60%;
+    width: 70%;
     display: inline-block;
+    padding: 5%;
 }
 
 .sidebar {
@@ -7006,16 +7007,31 @@ body.body-small .vote-icon {
 }
 
 .content-right {
-    width: 40%;
+    padding: 5% 5% 0 0;
+    width: 30%;
     float: right;
-    padding-left: 50px;
 }
 
-.content-right img{
+.content-right img {
     width: 100%;
     box-shadow: 0 0 0 2px #d2d2d2;
 }
-.content-left img{
-    width: 100%;
+
+.content-left img {
+    width: 80%;
     box-shadow: 0 0 0 5px #d2d2d2;
+}
+
+.ibox-content button {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    margin: 5%;
+}
+
+#cover-img {
+    position: absolute;
+    top: 45%;
+    width: 16%;
+    left: 82%;
 }

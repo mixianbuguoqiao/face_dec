@@ -14,6 +14,17 @@ var attributes_map = {
     "1.0": 10
 }
 var count = 10
+var counts = Array.apply(null, Array(attributes.length)).map(() => 0);
+
+
+function ishow(obj) {
+    document.getElementById("cover-" + obj.id).style.visibility = "visible";
+}
+
+function ihidden(obj) {
+    document.getElementById("cover-" + obj.id).style.visibility = "hidden";
+}
+
 
 function getImg(element) {
     var id = element.id
@@ -48,27 +59,45 @@ function drawSidebar() {
             + '"></div></div></div>';
     }
     sidebars.innerHTML = html;
-    sidebarValue();
+    sidebarValue(counts);
 }
 
-function sidebarValue() {
+
+function sidebarValue(counts) {
     for (var i = 0; i < attributes_key.length; i++) {
         var id = "#ionrange_" + i.toString();
-        var state = false
+        var state1 = false
+        var state2 = false
         if (i == 12) {
-            state = true
+            state1 = true
         }
+        if (counts[i] == 2) state2 = true
         $(id).ionRangeSlider({
-            grid: state,
+            grid: state1,
+            disable: state2,
             from: attributes_map[attributes_key[i]],
             values: [
                 "-1.0", "-0.8", "-0.6", "-0.4", "-0.2", "0.0", "0.2", "0.4", "0.6", "0.8", "1.0"
             ],
             onChange: function (data) {
-                console.log(data.input.context.id)
+                attributes_key[parseInt(data.input.context.id.substring(9, 11))] = data.from_value.toString()
+            },
+            onFinish: function (data) {
+                counts[parseInt(data.input.context.id.substring(9, 11))] = 1;
+                var num = checkNum(counts)
+                if (num >= 4) drawSidebar()
             }
         })
     }
+}
+
+function checkNum(arr) {
+    var num = 0
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == 1) num++;
+        else arr[i] = 2
+    }
+    return num
 }
 
 drawSidebar()
