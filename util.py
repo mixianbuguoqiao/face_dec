@@ -2,7 +2,7 @@ import cv2
 
 from importlib import import_module
 Camera = import_module('camera.camera_' + "opencv").Camera
-
+from attgan.my_util import get_result
 
 def gen(camera):
     """Video streaming generator function."""
@@ -38,3 +38,17 @@ def gen(camera):
 
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+def get_images():
+    print('11111111111111111')
+    input_image = "static/img/000001.jpg"
+    atts = None
+    level = None
+
+    if atts is not None:
+        input_image = atts[0]
+    print(input_image,atts,level)
+    image_atts = get_result(input_image, atts, level)
+    print(image_atts)
+    return '1'
+
+# get_images()

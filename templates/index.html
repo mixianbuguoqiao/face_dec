@@ -14,39 +14,6 @@
     <link href="../static/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
 
 </head>
-<!-- Mainly scripts -->
-<script src="../static/js/jquery-2.1.1.js"></script>
-<script src="../static/js/bootstrap.min.js"></script>
-
-
-<!--<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
-<!--<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-<!-- IonRangeSlider -->
-<script src="../static/js/plugins/ionRangeSlider/ion.rangeSlider.js"></script>
-<script src="../static/js/main.js"></script>
-<script>
-
-    function loadXMLDoc(url) {
-        var xmlhttp;
-        if (window.XMLHttpRequest) {
-            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-            xmlhttp = new XMLHttpRequest();
-        }
-        else {
-            // IE6, IE5 浏览器执行代码
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("change").innerHTML = xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-        $('#attribute').removeClass('active');
-        $('#camera').addClass('active')
-    }
-</script>
 
 <body class="top-navigation">
 
@@ -94,9 +61,10 @@
                             <div id="sidebars" class="content-left">
                             </div>
                             <div class="content-right">
+                                <div id="test"></div>
+                                <img id="img" src="../static/img/000001.jpg" alt="" onmouseover="ishow(this);" onmouseout="ihidden(this);" >
+                                <img id="cover-img" src="../static/img/000001.jpg" style="visibility:hidden; z-index:100" onmouseover="this.style.visibility='visible'" alt="">
 
-                                <img id="img" src="../static/img/0.png" alt="" onmouseover="ishow(this);" onmouseout="ihidden(this);" >
-                                <img id="cover-img" src="../static/img/0.png" style="visibility:hidden; z-index:100" onmouseover="this.style.visibility='visible'" alt="">
                             </div>
                         </div>
                     </div>
@@ -106,7 +74,45 @@
     </div>
 </div>
 
- <img src="{{ url_for('video_feed') }}">
+
+
+
+<!-- Mainly scripts -->
+<script src="../static/js/jquery-2.1.1.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+
+<!--<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
+<!--<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
+<!-- IonRangeSlider -->
+<script src="../static/js/plugins/ionRangeSlider/ion.rangeSlider.js"></script>
+<script src="../static/js/main.js"></script>
+<script>
+
+    function loadXMLDoc(url) {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("change").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        $('#attribute').removeClass('active');
+        $('#camera').addClass('active')
+    }
+
+</script>
+
+{# <img src="{{ url_for('video_feed') }}">#}
 
 </body>
 

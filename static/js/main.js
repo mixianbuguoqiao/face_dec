@@ -25,28 +25,52 @@ function ihidden(obj) {
     document.getElementById("cover-" + obj.id).style.visibility = "hidden";
 }
 
+function getFirstAtt() {
+    var datas = {
+        "input_image" : '000001.jpg',
+        "atts" : ["Beard","Old"],
+        "level" : [0.4,-0.6]
+    }
+    $.ajax({
+        type: "POST",
+        url: "/images",
+        cache: false,
+        dataType: 'json',
+        data: {'data': JSON.stringify(datas)},
+        error: function(XMLHttpRequest){
+            console.log(XMLHttpRequest.responseText)
+        },
+        success: function (XMLHttpRequest) {
+            console.log(XMLHttpRequest.responseText)
+        }
+    });
+
+}
+
 
 function getImg(element) {
     var id = element.id
     var img = document.getElementById('img');
-    img.src = "../static/img/" + id + ".png";
+    img.src = "../static/img/00000" + id + ".jpg";
 }
 
 function getImgList() {
     var imgs = document.getElementById('imgs')
     var html = "";
-    for (var i = 0; i < count; i++) {
+    for (var i = 1; i < count; i++) {
         html += '<li type="button" id="'
             + i
-            + '"  onclick="getImg(this)"><a href="javascript:void(0);"><img src="../static/img/'
+            + '"  onclick="getImg(this)"><a href="javascript:void(0);"><img src="../static/img/00000'
             + i
-            + '.png">图片'
+            + '.jpg">图片'
             + i + '</a></li>'
     }
     imgs.innerHTML = html
+    getFirstAtt()
 }
 
 getImgList()
+
 
 function drawSidebar() {
     var sidebars = document.getElementById('sidebars')

@@ -28,7 +28,7 @@ def get_result(input_data,test_atts=None,test_ints=None):
     global sess
     parser = argparse.ArgumentParser()
     args_ = parser.parse_args()
-    with open('./output/128_shortcut1_inject1_none/setting.txt') as f:
+    with open('./attgan/output/128_shortcut1_inject1_none/setting.txt') as f:
         args = json.load(f)
 
     # model
@@ -57,7 +57,7 @@ def get_result(input_data,test_atts=None,test_ints=None):
  #
  #        assert a in atts, 'test_atts should be chosen in %s' % (str(atts))
 
-    assert len(test_ints) == len(test_atts), 'the lengths of test_ints and test_atts should be the same!'
+  #  assert len(test_ints) == len(test_atts), 'the lengths of test_ints and test_atts should be the same!'
 
 
     # ==============================================================================
@@ -90,7 +90,7 @@ def get_result(input_data,test_atts=None,test_ints=None):
     # # initialization
 
 
-    ckpt_dir = './output/%s/checkpoints' % experiment_name
+    ckpt_dir = './attgan/output/%s/checkpoints' % experiment_name
     try:
         tl.load_checkpoint(ckpt_dir, sess)
     except:
@@ -104,7 +104,7 @@ def get_result(input_data,test_atts=None,test_ints=None):
         a_sample_ipt = sess.run(xa_logit_att, feed_dict={xa_sample: xa_sample_ipt}) > 0
         b_sample_ipt = np.array(a_sample_ipt, copy=True).astype(np.int)
 
-        if atts == None:
+        if test_atts == None:
             return b_sample_ipt
 
         for a in test_atts:
@@ -119,7 +119,7 @@ def get_result(input_data,test_atts=None,test_ints=None):
         x_sample_opt_list.append(sess.run(x_sample, feed_dict={xa_sample: xa_sample_ipt, _b_sample: _b_sample_ipt}))
         sample = np.concatenate(x_sample_opt_list, 2)
 
-        save_dir = './output/%s/sample_testing_multi_%s' % (experiment_name, str(test_atts))
+        save_dir = './attgan/output/%s/sample_testing_multi_%s' % (experiment_name, str(test_atts))
         pylib.mkdir(save_dir)
         term = sample.squeeze(0)
         im.imwrite(term, '%s/%d.png' % (save_dir, 1))
