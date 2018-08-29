@@ -52,14 +52,6 @@ def get_result(input_data,test_atts=None,test_ints=None):
 
     experiment_name = args["experiment_name"]
 
- #   assert test_atts is not None, 'test_atts should be chosen in %s' % (str(atts))
- #    for a in test_atts:
- #
- #        assert a in atts, 'test_atts should be chosen in %s' % (str(atts))
-
-  #  assert len(test_ints) == len(test_atts), 'the lengths of test_ints and test_atts should be the same!'
-
-
     # ==============================================================================
     # =                                   graphs                                   =
     # ==============================================================================
@@ -112,19 +104,34 @@ def get_result(input_data,test_atts=None,test_ints=None):
             b_sample_ipt[:, i] = 1 - b_sample_ipt[:, i]   # inverse attribute
             b_sample_ipt = my_data_deal.Celeba.check_attribute_conflict(b_sample_ipt, atts[i], atts)
 
-        x_sample_opt_list = [xa_sample_ipt, np.full((1, img_size, img_size // 10, 3), -1.0)]
+      #  x_sample_opt_list = [xa_sample_ipt, np.full((1, img_size, img_size // 10, 3), -1.0)]
         _b_sample_ipt = (b_sample_ipt * 2 - 1) * thres_int
+
         for a, i in zip(test_atts, test_ints):
             _b_sample_ipt[..., atts.index(a)] = _b_sample_ipt[..., atts.index(a)] * i / thres_int
-        x_sample_opt_list.append(sess.run(x_sample, feed_dict={xa_sample: xa_sample_ipt, _b_sample: _b_sample_ipt}))
-        sample = np.concatenate(x_sample_opt_list, 2)
+
+        sample = sess.run(x_sample, feed_dict={xa_sample: xa_sample_ipt, _b_sample: _b_sample_ipt})
 
         save_dir = './attgan/output/%s/sample_testing_multi_%s' % (experiment_name, str(test_atts))
         pylib.mkdir(save_dir)
         term = sample.squeeze(0)
         im.imwrite(term, '%s/%d.png' % (save_dir, 1))
 
-        print('%d.png done!' % (1))
+
+
+
+
+
+
+        # x_sample_opt_list.append(sess.run(x_sample, feed_dict={xa_sample: xa_sample_ipt, _b_sample: _b_sample_ipt}))
+        # sample = np.concatenate(x_sample_opt_list, 2)
+        #
+        # save_dir = './attgan/output/%s/sample_testing_multi_%s' % (experiment_name, str(test_atts))
+        # pylib.mkdir(save_dir)
+        # term = sample.squeeze(0)
+        # im.imwrite(term, '%s/%d.png' % (save_dir, 1))
+        #
+        # print('%d.png done!' % (1))
 
 
 

@@ -28,7 +28,7 @@ function ihidden(obj) {
 function getFirstAtt() {
     var datas = {
         "input_image" : '000001.jpg',
-        "atts" : ["Beard","Old"],
+        "atts" : ["Male","Young"],
         "level" : [0.4,-0.6]
     }
     $.ajax({
