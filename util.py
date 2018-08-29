@@ -7,7 +7,7 @@ import json
 
 import attgan.imlib as im
 import numpy as np
-
+import attgan.pylib as pylib
 import tensorflow as tf
 import attgan.tflib as tl
 import attgan.my_data_deal as my_data_deal
@@ -113,44 +113,49 @@ def get_result(input_data,test_atts=None,test_ints=None):
     # ==============================================================================
 
     # # initialization
-    print("------------",sess)
+
     if sess == None:
 
         sess = tl.session()
-
         ckpt_dir = './attgan/output/%s/checkpoints' % experiment_name
-
         tl.load_checkpoint(ckpt_dir, sess)
 
-        te_data = my_data_deal.Celeba(input_data, atts, img_size, 1, sess=sess, crop=True)
-        batch = te_data.get_next()
 
-        data1 = batch[0]  # 10 128 128 3
-        xa_sample_ipt = data1.reshape([1, 128, 128, 3])
-        a_sample_ipt = sess.run(xa_logit_att, feed_dict={xa_sample: xa_sample_ipt}) > 0
-        b_sample_ipt = np.array(a_sample_ipt, copy=True).astype(np.int)
 
-        if test_atts == None:
-            return b_sample_ipt
+    te_data = my_data_deal.Celeba(input_data, atts, img_size, 1, crop=True)
+    batch = te_data.get_next()
 
-        for a in test_atts:
-            i = atts.index(a)
-            b_sample_ipt[:, i] = 1 - b_sample_ipt[:, i]   # inverse attribute
-            b_sample_ipt = my_data_deal.Celeba.check_attribute_conflict(b_sample_ipt, atts[i], atts)
+    data1 = batch[0]  # 10 128 128 3
+    xa_sample_ipt = data1.reshape([1, 128, 128, 3])
+    a_sample_ipt = sess.run(xa_logit_att, feed_dict={xa_sample: xa_sample_ipt}) > 0
+    b_sample_ipt = np.array(a_sample_ipt, copy=True).astype(np.int)
 
-        _b_sample_ipt = (b_sample_ipt * 2 - 1) * thres_int
+    if test_atts == None:
 
-        for a, i in zip(test_atts, test_ints):
-            _b_sample_ipt[..., atts.index(a)] = _b_sample_ipt[..., atts.index(a)] * i / thres_int
+        return b_sample_ipt
 
-        sample = sess.run(x_sample, feed_dict={xa_sample: xa_sample_ipt, _b_sample: _b_sample_ipt})
 
-        save_dir = "./static/out/"
-        #pylib.mkdir(save_dir)
-        term = sample.squeeze(0)
-        im.imwrite(term, '%s/%d.png' % (save_dir, 1))
+    for a in test_atts:
+        i = atts.index(a)
+        b_sample_ipt[:, i] = 1 - b_sample_ipt[:, i]   # inverse attribute
+        b_sample_ipt = my_data_deal.Celeba.check_attribute_conflict(b_sample_ipt, atts[i], atts)
 
-        print("------------")
+    _b_sample_ipt = (b_sample_ipt * 2 - 1) * thres_int
+
+    for a, i in zip(test_atts, test_ints):
+        _b_sample_ipt[..., atts.index(a)] = _b_sample_ipt[..., atts.index(a)] * i / thres_int
+
+    sample = sess.run(x_sample, feed_dict={xa_sample: xa_sample_ipt, _b_sample: _b_sample_ipt})
+
+    # save_dir = './attgan/output/%s/sample_testing_multi_%s' % (experiment_name, str(test_atts))
+    # pylib.mkdir(save_dir)
+    save_dir = "./static/out"
+    pylib.mkdir(save_dir)
+    term = sample.squeeze(0)
+    im.imwrite(term, '%s/%d.png' % (save_dir, 1))
+
+
+
 
 
 

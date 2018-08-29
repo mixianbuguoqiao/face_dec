@@ -47,9 +47,9 @@ def get_images():
          print(image_atts)
 
 
-    print("222")
+
     get_result("static/img/"+input_image, test_atts=atts, test_ints=level)
-    print("1111")
+
     return '1'
 
 
