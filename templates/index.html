@@ -31,11 +31,11 @@
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li id="camera">
-                            <a aria-expanded="false" onclick="loadXMLDoc('../static/camera.html')" role="button"
+                            <a aria-expanded="false" role="button"
                                href="javascript:void(0);">拍摄照片</a>
                         </li>
                         <li id="attribute" class="active">
-                            <a aria-expanded="false" onclick="loadXMLDoc('../static/attribute.html')" role="button"
+                            <a aria-expanded="false" role="button"
                                href="javascript:void(0);">修改属性</a>
                         </li>
                     </ul>
@@ -62,10 +62,13 @@
                             </div>
                             <div class="content-right">
                                 <div id="test"></div>
-                                <img id="img" src="../static/img/000001.jpg" alt="" onmouseover="ishow(this);" onmouseout="ihidden(this);" >
-                                <img id="cover-img" src="../static/img/000001.jpg" style="visibility:hidden; z-index:100" onmouseover="this.style.visibility='visible'" alt="">
-
+                                <img id="img" src="../static/img/000001.jpg" alt="" onmouseover="ishow(this);"
+                                     onmouseout="ihidden(this);">
+                                <img id="cover-img" src="../static/img/000001.jpg"
+                                     style="visibility:hidden; z-index:100"
+                                     onmouseover="this.style.visibility='visible'" alt="">
                             </div>
+                            <button class="btn btn-sm btn-primary" onclick="freshSidebar()" style="left: 65%;bottom: 65px;">重置</button>
                         </div>
                     </div>
                 </div>
@@ -73,8 +76,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!-- Mainly scripts -->
@@ -87,32 +88,29 @@
 <!-- IonRangeSlider -->
 <script src="../static/js/plugins/ionRangeSlider/ion.rangeSlider.js"></script>
 <script src="../static/js/main.js"></script>
-<script>
-
-    function loadXMLDoc(url) {
-        var xmlhttp;
-        if (window.XMLHttpRequest) {
-            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-            xmlhttp = new XMLHttpRequest();
-        }
-        else {
-            // IE6, IE5 浏览器执行代码
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("change").innerHTML = xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-        $('#attribute').removeClass('active');
-        $('#camera').addClass('active')
-    }
-
-</script>
-
-{# <img src="{{ url_for('video_feed') }}">#}
+{#<script>#}
+{#    function loadXMLDoc(url) {#}
+{#        var xmlhttp;#}
+{#        if (window.XMLHttpRequest) {#}
+{#            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码#}
+{#            xmlhttp = new XMLHttpRequest();#}
+{#        }#}
+{#        else {#}
+{#            // IE6, IE5 浏览器执行代码#}
+{#            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");#}
+{#        }#}
+{#        xmlhttp.onreadystatechange = function () {#}
+{#            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {#}
+{#                document.getElementById("change").innerHTML = xmlhttp.responseText;#}
+{#            }#}
+{#        }#}
+{#        xmlhttp.open("GET", url, true);#}
+{#        xmlhttp.send();#}
+{#        $('#attribute').removeClass('active');#}
+{#        $('#camera').addClass('active')#}
+{#    }#}
+{##}
+{#</script>#}
 
 </body>
 

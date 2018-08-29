@@ -1,21 +1,16 @@
 var attributes = ["秃头", "刘海", "黑发", "金发", "棕发", "浓眉", "眼镜", "男性", "微笑", "胡子", "无胡", "肤色", "年轻"];
-var attributes_key = ["0.4", "0.2", "-1.0", "0.8", "0.4", "0.6", "-0.6", "-0.8", "1.0", "0.8", "0.4", "0.4", "0.2"];
-var attributes_map = {
-    "-1.0": 0,
-    "-0.8": 1,
-    "-0.6": 2,
-    "-0.4": 3,
-    "-0.2": 4,
-    "0.0": 5,
-    "0.2": 6,
-    "0.4": 7,
-    "0.6": 8,
-    "0.8": 9,
-    "1.0": 10
-}
-var count = 10
+var attributes_eng = ["Bald", "Bangs", "Black_Hair", "Blond_Hair", "Brown_Hair", "Bushy_Eyebrows", "Eyeglasses", "Male",
+    "Mouth_Slightly_Open", "Mustache", "No_Beard", "Pale_Skin", "Young"];
+var attributes_value = ["0.4", "0.2", "-1.0", "0.8", "0", "0.6", "-0.6", "-0.8", "1.0", "0.8", "0.4", "0.4", "0.2"];
+var attribute_level = ["-1.0", "-0.8", "-0.6", "-0.4", "-0.2", "0", "0.2", "0.4", "0.6", "0.8", "1.0"];
+var count = 10;
 var counts = Array.apply(null, Array(attributes.length)).map(() => 0);
-
+var datas = {
+    "input_image": '000001.jpg',
+    "atts": [],
+    "level": []
+}
+var copy_att_value = ["0.4", "0.2", "-1.0", "0.8", "0", "0.6", "-0.6", "-0.8", "1.0", "0.8", "0.4", "0.4", "0.2"];
 
 function ishow(obj) {
     document.getElementById("cover-" + obj.id).style.visibility = "visible";
@@ -25,19 +20,17 @@ function ihidden(obj) {
     document.getElementById("cover-" + obj.id).style.visibility = "hidden";
 }
 
-function getFirstAtt() {
-    var datas = {
-        "input_image" : '000001.jpg',
-        "atts" : ["Male","Young"],
-        "level" : [0.4,-0.6]
-    }
+
+function getAtt() {
+    console.log(datas)
+
     $.ajax({
         type: "POST",
         url: "/images",
         cache: false,
         dataType: 'json',
         data: {'data': JSON.stringify(datas)},
-        error: function(XMLHttpRequest){
+        error: function (XMLHttpRequest) {
             console.log(XMLHttpRequest.responseText)
         },
         success: function (XMLHttpRequest) {
@@ -47,11 +40,17 @@ function getFirstAtt() {
 
 }
 
-
 function getImg(element) {
+
     var id = element.id
     var img = document.getElementById('img');
+    var cover_img = document.getElementById('cover-img');
     img.src = "../static/img/00000" + id + ".jpg";
+    cover_img.src = "../static/img/00000" + id + ".jpg";
+    datas['input_image'] = "00000" + id + ".jpg";
+    datas['atts'] = [];
+    datas['level'] = [];
+    getAtt();
 }
 
 function getImgList() {
@@ -66,13 +65,13 @@ function getImgList() {
             + i + '</a></li>'
     }
     imgs.innerHTML = html
-    getFirstAtt()
+    getAtt()
 }
 
 getImgList()
 
 
-function drawSidebar() {
+function drawSidebar(arr) {
     var sidebars = document.getElementById('sidebars')
     var html = '';
     for (var i = 0; i < attributes.length; i++) {
@@ -83,12 +82,12 @@ function drawSidebar() {
             + '"></div></div></div>';
     }
     sidebars.innerHTML = html;
-    sidebarValue(counts);
+    sidebarValue(arr);
 }
 
 
-function sidebarValue(counts) {
-    for (var i = 0; i < attributes_key.length; i++) {
+function sidebarValue(arr) {
+    for (var i = 0; i < arr.length; i++) {
         var id = "#ionrange_" + i.toString();
         var state1 = false
         var state2 = false
@@ -99,20 +98,39 @@ function sidebarValue(counts) {
         $(id).ionRangeSlider({
             grid: state1,
             disable: state2,
-            from: attributes_map[attributes_key[i]],
+            from: attribute_level.indexOf(arr[i]),
             values: [
-                "-1.0", "-0.8", "-0.6", "-0.4", "-0.2", "0.0", "0.2", "0.4", "0.6", "0.8", "1.0"
+                "-1.0", "-0.8", "-0.6", "-0.4", "-0.2", "0", "0.2", "0.4", "0.6", "0.8", "1.0"
             ],
             onChange: function (data) {
-                attributes_key[parseInt(data.input.context.id.substring(9, 11))] = data.from_value.toString()
+                attributes_value[parseInt(data.input.context.id.substring(9, 11))] = data.from_value.toString();
+                changeAtt(data.from_value, data.input.context.id.substring(9, 11))
+                getAtt()
             },
             onFinish: function (data) {
                 counts[parseInt(data.input.context.id.substring(9, 11))] = 1;
                 var num = checkNum(counts)
-                if (num >= 4) drawSidebar()
+                if (num >= 4) drawSidebar(attributes_value)
             }
         })
     }
+}
+
+function changeAtt(value, num) {
+    var i = findHave(datas["atts"], attributes_eng[num])
+    if (i == 100) {
+        datas["atts"].push(attributes_eng[num])
+        datas["level"].push(value)
+    }
+    else datas["level"][i] = value
+}
+
+function findHave(arr, value) {
+    var state = 100
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == value) state = i;
+    }
+    return state
 }
 
 function checkNum(arr) {
@@ -124,4 +142,11 @@ function checkNum(arr) {
     return num
 }
 
-drawSidebar()
+function freshSidebar() {
+    counts = Array.apply(null, Array(attributes.length)).map(() => 0);
+    drawSidebar(copy_att_value)
+    datas['atts'] = [];
+    datas['level'] = [];
+}
+
+drawSidebar(attributes_value)

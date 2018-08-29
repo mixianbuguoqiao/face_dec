@@ -145,7 +145,7 @@ def get_result(input_data,test_atts=None,test_ints=None):
 
         sample = sess.run(x_sample, feed_dict={xa_sample: xa_sample_ipt, _b_sample: _b_sample_ipt})
 
-        save_dir = "./test_images/"
+        save_dir = "./static/out/"
         #pylib.mkdir(save_dir)
         term = sample.squeeze(0)
         im.imwrite(term, '%s/%d.png' % (save_dir, 1))
