@@ -1,32 +1,23 @@
-# CapsNet-Visualization
+# face_edit(人脸特征编辑器)
 
-![](readme/4.gif)
+## Introduction
+Based on the tensorflow implementation of AttGAN -  [Arbitrary Facial Attribute Editing: Only Change What You Want](https://arxiv.org/abs/1711.10678), our group have made the web demo of flask to show the effect of Att-gan.   
 
-For more information on capsule networks check out my Medium articles [here](https://hackernoon.com/capsule-networks-are-shaking-up-ai-heres-how-to-use-them-c233a0971952) and [here](https://medium.freecodecamp.org/understanding-capsule-networks-ais-alluring-new-architecture-bdb228173ddc).
+## Manipulation
+1. To work this demo, you need to download the [Weights](https://note.youdao.com/) of Attgan. and put it in directory **attgan**.
 
-## Setup
-
-Use pip to install the required python packages:
-
-```bash
-pip install -r requirements.txt
+2. Then 
 ```
-
-## Running the Tool
-
-Start the Flask application by running:
-
-```bash
 python run_visualization.py
 ```
+## Environment
 
-Point your browser to: http://localhost:5000
+-   python>=3.5 
+-  tensorflow-gpu>=1.3
 
-## Testing your own Images
+## Video
 
-Add your images to the `test_images` directory.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gnN4ZjEWe-8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-Run:
-```bash
-python render.py [filename]
-```
+## Reference
+https://github.com/LynnHo/AttGAN-Tensorflow
