@@ -17,7 +17,9 @@ python run_visualization.py
 
 ## Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gnN4ZjEWe-8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+https://www.youtube.com/watch?v=CvVvwh3BRq
 
 ## Reference
 https://github.com/LynnHo/AttGAN-Tensorflow
