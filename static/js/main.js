@@ -1,16 +1,18 @@
 var attributes = ["秃头", "刘海", "黑发", "金发", "棕发", "浓眉", "眼镜", "男性", "微笑", "胡子", "无胡", "肤色", "年轻"];
 var attributes_eng = ["Bald", "Bangs", "Black_Hair", "Blond_Hair", "Brown_Hair", "Bushy_Eyebrows", "Eyeglasses", "Male",
     "Mouth_Slightly_Open", "Mustache", "No_Beard", "Pale_Skin", "Young"];
-var attributes_value = ["0.4", "0.2", "-1.0", "0.8", "0", "0.6", "-0.6", "-0.8", "1.0", "0.8", "0.4", "0.4", "0.2"];
-var attribute_level = ["-1.0", "-0.8", "-0.6", "-0.4", "-0.2", "0", "0.2", "0.4", "0.6", "0.8", "1.0"];
-var count = 10;
+var attributes_value = Array.apply(null, Array(attributes.length)).map(() => "0.0");
+var copy_att_value = Array.apply(null, Array(attributes.length)).map(() => "0.0");
 var counts = Array.apply(null, Array(attributes.length)).map(() => 0);
+var attribute_level = ["-1", "-0.8", "-0.6", "-0.4", "-0.2", "0", "0.2", "0.4", "0.6", "0.8", "1"];
+var count = 10;
 var datas = {
     "input_image": '000001.jpg',
     "atts": [],
     "level": []
 }
-var copy_att_value = ["0.4", "0.2", "-1.0", "0.8", "0", "0.6", "-0.6", "-0.8", "1.0", "0.8", "0.4", "0.4", "0.2"];
+
+var image_id = 1
 
 function ishow(obj) {
     document.getElementById("cover-" + obj.id).style.visibility = "visible";
@@ -20,10 +22,12 @@ function ihidden(obj) {
     document.getElementById("cover-" + obj.id).style.visibility = "hidden";
 }
 
+function strToList(str) {
+    return str.split(',')
+}
+
 
 function getAtt() {
-    console.log(datas)
-
     $.ajax({
         type: "POST",
         url: "/images",
@@ -31,26 +35,33 @@ function getAtt() {
         dataType: 'json',
         data: {'data': JSON.stringify(datas)},
         error: function (XMLHttpRequest) {
-            console.log(XMLHttpRequest.responseText)
+            attributes_value = strToList(XMLHttpRequest.responseText);
+            copy_att_value = strToList(XMLHttpRequest.responseText);
+            drawSidebar(attributes_value)
         },
         success: function (XMLHttpRequest) {
-            console.log(XMLHttpRequest.responseText)
+            var img = document.getElementById('img');
+            img.src = "../static/out/1.png" + "?temp=" + Math.random()
         }
-    });
 
+    });
 }
 
 function getImg(element) {
-
-    var id = element.id
-    var img = document.getElementById('img');
-    var cover_img = document.getElementById('cover-img');
-    img.src = "../static/img/00000" + id + ".jpg";
-    cover_img.src = "../static/img/00000" + id + ".jpg";
-    datas['input_image'] = "00000" + id + ".jpg";
+    image_id = element.id
+        console.log(image_id)
+    showImg('img', image_id)
+    showImg('cover-img', image_id)
+    counts = Array.apply(null, Array(attributes.length)).map(() => 0);
+    datas['input_image'] = "00000" + image_id + ".jpg";
     datas['atts'] = [];
     datas['level'] = [];
     getAtt();
+}
+
+function showImg(tap_id, img_id) {
+    var tap = document.getElementById(tap_id);
+    tap.src = "../static/img/00000" + img_id + ".jpg";
 }
 
 function getImgList() {
@@ -110,7 +121,7 @@ function sidebarValue(arr) {
             onFinish: function (data) {
                 counts[parseInt(data.input.context.id.substring(9, 11))] = 1;
                 var num = checkNum(counts)
-                if (num >= 4) drawSidebar(attributes_value)
+                if (num >= 3) drawSidebar(attributes_value)
             }
         })
     }
@@ -147,6 +158,6 @@ function freshSidebar() {
     drawSidebar(copy_att_value)
     datas['atts'] = [];
     datas['level'] = [];
+    showImg('img', image_id)
 }
 
-drawSidebar(attributes_value)

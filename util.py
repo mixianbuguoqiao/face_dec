@@ -153,7 +153,7 @@ def get_result(input_data,test_atts=None,test_ints=None):
     pylib.mkdir(save_dir)
     term = sample.squeeze(0)
     im.imwrite(term, '%s/%d.png' % (save_dir, 1))
-
+    print("well done")
 
 
 

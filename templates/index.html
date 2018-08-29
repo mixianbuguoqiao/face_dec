@@ -30,10 +30,10 @@
                 </div>
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav">
-                        <li id="camera">
+                        <!--<li id="camera">
                             <a aria-expanded="false" role="button"
                                href="javascript:void(0);">拍摄照片</a>
-                        </li>
+                        </li>-->
                         <li id="attribute" class="active">
                             <a aria-expanded="false" role="button"
                                href="javascript:void(0);">修改属性</a>
@@ -47,7 +47,7 @@
                 <div class="col-lg-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
-                            <div class="file-manager">
+                            <div class="file-manager" style="padding: 30% 0 30% 0;">
                                 <h5>选择图片:</h5>
                                 <ul id="imgs" class="folder-list" style="padding: 0">
                                 </ul>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-lg-10" id="change">
                     <div class="ibox">
-                        <div class="ibox-content">
+                        <div class="ibox-content" style="min-height: 800px;">
                             <div id="sidebars" class="content-left">
                             </div>
                             <div class="content-right">
@@ -68,7 +68,9 @@
                                      style="visibility:hidden; z-index:100"
                                      onmouseover="this.style.visibility='visible'" alt="">
                             </div>
-                            <button class="btn btn-sm btn-primary" onclick="freshSidebar()" style="left: 65%;bottom: 65px;">重置</button>
+                            <button class="btn btn-sm btn-primary" onclick="freshSidebar()"
+                                    style="left: 73%;bottom: 65px;">重置
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -81,37 +83,31 @@
 <!-- Mainly scripts -->
 <script src="../static/js/jquery-2.1.1.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
-
-
-<!--<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
-<!--<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-<!-- IonRangeSlider -->
 <script src="../static/js/plugins/ionRangeSlider/ion.rangeSlider.js"></script>
 <script src="../static/js/main.js"></script>
-{#<script>#}
-{#    function loadXMLDoc(url) {#}
-{#        var xmlhttp;#}
-{#        if (window.XMLHttpRequest) {#}
-{#            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码#}
-{#            xmlhttp = new XMLHttpRequest();#}
-{#        }#}
-{#        else {#}
-{#            // IE6, IE5 浏览器执行代码#}
-{#            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");#}
-{#        }#}
-{#        xmlhttp.onreadystatechange = function () {#}
-{#            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {#}
-{#                document.getElementById("change").innerHTML = xmlhttp.responseText;#}
-{#            }#}
-{#        }#}
-{#        xmlhttp.open("GET", url, true);#}
-{#        xmlhttp.send();#}
-{#        $('#attribute').removeClass('active');#}
-{#        $('#camera').addClass('active')#}
-{#    }#}
-{##}
-{#</script>#}
+<!--<script>
+    function loadXMLDoc(url) {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("change").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        $('#attribute').removeClass('active');
+        $('#camera').addClass('active')
+    }
 
+</script>-->
 </body>
 
 </html>
